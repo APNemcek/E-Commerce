@@ -1,0 +1,274 @@
+section {
+    max-width: 100vw;
+    margin: 40px;
+    margin-left: 10vw;
+    margin-right: 10vw;
+    padding: 20px;
+    width: auto;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+section h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+section form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+section input{
+    width: 40px;
+    text-align: center;
+    font-size: 1.1em;
+}
+
+section form label {
+    font-weight: bold;
+    align-self: center;
+}
+
+section form select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.productos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(350px, 1fr));
+    gap: 20px;
+    align-items: stretch;
+}
+
+.producto {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+}
+
+.producto:hover {
+    transform: scale(1.05);
+}
+
+.producto-img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.producto-img:hover{
+    transform: scale(1.25);
+    transition: ease 0.3s;
+}
+.producto-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    user-select: none;
+    height: 100%;
+}
+
+.producto-link:hover {
+    outline: none;
+    text-decoration: none;
+}
+
+.producto .info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.producto h3 {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.producto p {
+    margin-bottom: 2px;
+}
+
+.producto span{
+    margin-top: auto;
+
+}
+
+.producto button,
+.producto .btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+    margin-top: auto;
+}
+
+.producto button:hover,
+.producto .btn:hover {
+    background-color: #218838;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px;
+    font-size: 1.2em;
+}
+
+.pagination a {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.pagination a:hover {
+    background-color: #0056b3;
+}
+
+.pagination span {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Responsivos */
+
+/* 1024px */
+@media (max-width: 1024px) {
+    section{
+        margin: 20px;
+        margin-left: 6vw;
+        margin-right: 6vw;
+        padding: 0;
+    }
+    .productos {
+        grid-template-columns: repeat(2, minmax(300px, 1fr));
+        margin: 10px;
+    }
+
+    .producto-img {
+        height: 180px;
+    }
+
+    .producto h3 {
+        font-size: 1.1em;
+    }
+
+    .producto p {
+        font-size: 1em;
+    }
+
+    .producto button,
+    .producto .btn {
+        font-size: 0.95em;
+    }
+}
+
+/* 768px */
+@media (max-width: 768px) {
+    .productos {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .producto-img {
+        height: 150px;
+    }
+
+    .producto h3 {
+        font-size: 1em;
+    }
+
+    .producto p {
+        font-size: 0.9em;
+    }
+
+    .producto button,
+    .producto .btn {
+        font-size: 0.9em;
+        padding: 8px;
+    }
+
+    .pagination {
+        font-size: 1em;
+        gap: 8px;
+    }
+
+    .pagination a {
+        padding: 8px 12px;
+    }
+}
+
+/* 480px */
+@media (max-width: 480px) {
+    section{
+        margin: 15px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    .form_filtro {
+        margin: 10px;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .productos {
+        grid-template-columns: 1fr;
+        margin: 5px;
+    }
+
+    .producto-img {
+        height: 120px;
+    }
+
+    .producto h3 {
+        font-size: 0.9em;
+    }
+
+    .producto p {
+        font-size: 0.8em;
+    }
+
+    .producto button,
+    .producto .btn {
+        font-size: 0.8em;
+        padding: 7px;
+    }
+
+    .pagination {
+        font-size: 0.9em;
+        gap: 5px;
+    }
+
+    .pagination a {
+        padding: 7px 10px;
+    }
+}

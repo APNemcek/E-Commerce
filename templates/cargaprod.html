@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>HWStore</title>
+        <link rel="stylesheet" href="../static/css/body.css">
+        <link rel="stylesheet" href="../static/css/logYreg.css">
+        <link rel="stylesheet" href="../static/css/cargaprod.css">
+    </head>
+    <body>
+        <header>
+
+            <div class= "lineaheader">
+                <div>
+                    <a href="/home"><img src="../static/img/Logo.png" alt="Gracias por confiar!" class="logo"></a>
+                </div>
+                <div>
+                    <a href="/home"><img src="../static/img/Nombre Logo.png" alt="Gracias por confiar!" class="logo"></a>
+                </div>
+                <div class="login-container">
+                    <a href="javascript:void(0);" onclick="toggleMenuLogin()">
+                        <img src="../static/img/login.png" alt="Mi usuario" class="icono">
+                    </a>
+                    {%if usuarioChecked %}
+                    <div id="loginMenu" class="login-menu">
+                        <p>{{usuarioChecked}}</p>
+                        {% if session['idusuario'] == 1 %}
+                        <a href="/productos" id="a_1">Listado de productos</a>
+                        <a href="/cargaprod" id="a_1">Cargar producto</a>
+                        <a href="/compras" id="a_1">Ventas</a>
+                        <a href="/logout" id="a_2">Cerrar sesión</a>
+                        {% else %}
+                        <a href="/perfil" id="a_1">Mi cuenta</a>
+                        <a href="/compras" id="a_1">Mis compras</a>
+                        <a href="/chat" id="a_1">Chat</a>
+                        <a href="/logout" id="a_2">Cerrar sesión</a>
+                        {% endif %}
+                    </div>
+                    {% else %}
+                    <div id="loginMenu" class="login-menu">
+                        <p>Sesión de Invitado</p>
+                        <a href="javascript:void(0);" onclick="loadTemplate('login')" id="a_1">Iniciar sesión</a>
+                        <a href="javascript:void(0);" onclick="loadTemplate('registro')" id="a_2">Registrarme</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class= "lineaheader">
+                <div class="categ_container">
+                    <a href="javascript:void(0);" onclick="toggleMenuCateg()"><img src="../static/img/bars.png" alt="Categorías" class="icono"></a>
+                    <div id="categMenu" class="categ_menu">
+                        <p>Categorías</p>
+                        <a href="/productos" id="a_1">Mostrar todo</a>
+                        <a href="/productos?categoria=Procesadores" id="a_1">Procesadores</a>
+                        <a href="/productos?categoria=Placas+de+video" id="a_1">Placas de video</a>
+                        <a href="/productos?categoria=Almacenamiento+SSD" id="a_1">Almacenamiento SSD</a>
+                        <a href="/productos?categoria=Almacenamiento+HDD" id="a_1">Almacenamiento HDD</a>
+                        <a href="/productos?categoria=Memorias+RAM" id="a_1">Memorias RAM</a>
+                        <a href="/productos?categoria=Motherboards" id="a_2">Motherboards</a>
+                    </div>
+                </div>
+                <form action="{{ url_for('visualizar_productos') }}" method="get">
+                    <input type="search" name="q" value="{{ query }}" id="search" placeholder="Buscar productos...">
+                    <button type="submit" style="display:none;"></button>
+                </form>
+                <div>
+                    {% if usuarioChecked and session['idusuario'] == 1 %}
+                    <a href="/chat"><img src="../static/img/chat.png" alt="Chat" class="icono"></a>
+                    {% else %}
+                    <a href="/carrito"><img src="../static/img/cart.png" alt="Carrito" class="icono"></a>
+                    {% endif %}
+                </div>
+            </div>
+
+        </header>
+
+        <div id="errores" class="error_container {% if not get_flashed_messages() %} oculto {% endif %}">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <div id="popupContainer" class="popup_container">
+            <div id="popupContent"></div>
+        </div>
+
+        <section>
+            <div>
+                <form action="/cargaprod" method="POST" enctype="multipart/form-data" class="form-producto">
+            
+                    <input type="hidden" name="idproducto" value="{{ producto.idproducto if producto else '' }}">
+            
+                    <label for="nombre" class="label-nombre">Nombre del producto:</label>
+                    <input type="text" id="nombre" name="nombre" value="{{ producto.nombre if producto else '' }}" required maxlength="50" class="input-nombre">
+            
+                    <label for="desc" class="label-desc">Descripción del producto:</label>
+                    <textarea id="desc" name="desc" required maxlength="250" class="input-desc">{{ producto.descripcion if producto else '' }}</textarea>
+            
+                    <label for="precio" class="label-precio">Precio del producto:</label>
+                    <input type="number" id="precio" name="precio" value="{{ producto.precio if producto else '' }}" required min="0" class="input-precio">
+            
+                    <label for="stock" class="label-stock">Stock del producto:</label>
+                    <input type="number" id="stock" name="stock" value="{{ producto.stock if producto else '' }}" required min="0" class="input-stock">
+            
+                    <label for="categoria" class="label-categoria">Categoría del producto:</label>
+                    <select id="categoria" name="categoria" required class="input-categoria">
+                        <option value="">--Selecciona categoría--</option>
+                        <option value="Procesadores" {% if producto and producto.categoria == 'Procesadores' %}selected{% endif %}>Procesadores</option>
+                        <option value="Placas de video" {% if producto and producto.categoria == 'Placas de video' %}selected{% endif %}>Placas de video</option>
+                        <option value="Almacenamiento SSD" {% if producto and producto.categoria == 'Almacenamiento SSD' %}selected{% endif %}>Almacenamiento SSD</option>
+                        <option value="Almacenamiento HDD" {% if producto and producto.categoria == 'Almacenamiento HDD' %}selected{% endif %}>Almacenamiento HDD</option>
+                        <option value="Memorias RAM" {% if producto and producto.categoria == 'Memorias RAM' %}selected{% endif %}>Memorias RAM</option>
+                        <option value="Motherboards" {% if producto and producto.categoria == 'Motherboards' %}selected{% endif %}>Motherboards</option>
+                    </select>
+            
+                    <label for="descuento" class="label-descuento">Porcentaje de descuento del producto:</label>
+                    <input type="number" id="descuento" name="descuento" value="{{ producto.descuento if producto else '' }}" required step="1" min="0" max="100" class="input-descuento">
+            
+                    <label for="vendidos" class="label-vendidos">Cantidad vendida de este producto:</label>
+                    <input type="number" id="vendidos" name="vendidos" value="{{ producto.vendidos if producto else '' }}" required min="0" class="input-vendidos">
+            
+                    <label for="imagenes" class="label-imagenes">Imágenes del producto:</label>
+                    <input type="file" id="imagenes" name="imagenes" accept="image/*" multiple class="input-imagenes">
+            
+                    <button type="submit" class="btn-submit">{% if producto %}Editar {% else %}Cargar producto {% endif %}</button>
+                    {% if producto %}
+                    <button type="submit" class="btn-eliminar-producto" formaction="/eliminar-producto" formmethod="POST" onclick="return confirm('¿Seguro que deseas eliminar este producto?')">
+                        Eliminar producto
+                    </button>
+                    {% endif %}
+            
+                </form>
+            
+                {% if producto and producto.imagenes %}
+                <div class="imagenes_container">
+                    <h1>Imágenes actuales:</h1>
+                    {% for img in producto.imagenes %}
+                    <div class="imagen-contenedor">
+                        <img src="{{ url_for('uploads', filename=img.rutaimg) }}" alt="Imagen producto" class="img-producto">
+                        <form action="/eliminar-imagen" method="POST" class="form-eliminar-imagen">
+                            <input type="hidden" name="idproducto" value="{{ producto.idproducto }}">
+                            <input type="hidden" name="rutaimg" value="{{ img.rutaimg }}">
+                            <button type="submit" class="btn-eliminar-imagen">X</button>
+                        </form>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {% if producto %}<p>No hay imágenes cargadas para este producto</p>{% endif %}
+                {% endif %}
+            
+            </div>
+        </section>
+        
+
+        <footer>
+            <div class="container_footer">
+                <img src="../static/img/Logo.png" class="logofooter">
+            </div>
+            <div class="container_footer">
+                <h1>Ayuda</h1>
+                <input type="checkbox" id="PopUpCatalizador1" class="CheckOculto"><label for="PopUpCatalizador1" class="txt_footer"><p>Términos y condiciones</p></label>
+                <div class="infospawn">¿¿??</div>
+                <input type="checkbox" id="PopUpCatalizador2" class="CheckOculto"><label for="PopUpCatalizador2" class="txt_footer"><p>Métodos de envío</p></label>
+                <div class="infospawn">
+                    <p>Envíos a capital y GBA en moto</p>
+                    <p>Envíos por correo a todo el país</p>
+                    <p>Retiro en sucursal</p>
+                </div>
+                <input type="checkbox" id="PopUpCatalizador3" class="CheckOculto"><label for="PopUpCatalizador3" class="txt_footer"><p>Métodos de pago</p></label>
+                <div class="infospawn">Sólo aceptamos transferencia</div>
+            </div>
+            <div class="container_footer">
+                <h1>Atención al cliente</h1>
+                <input type="checkbox" id="PopUpCatalizador4" class="CheckOculto"><label for="PopUpCatalizador4" class="txt_footer"><p>Mail</p></label>
+                <div class="infospawn">nomolestar@hwstore.com</div>
+                <input type="checkbox" id="PopUpCatalizador5" class="CheckOculto"><label for="PopUpCatalizador5" class="txt_footer"><p>Teléfono</p></label>
+                <div class="infospawn">1122445566</div>
+                <p class="txt_footer"><a href="/chat">Chat</a></p>
+            </div>
+            <div class="container_footer">
+                <input type="checkbox" id="PopUpCatalizador6" class="CheckOculto"><label for="PopUpCatalizador6" class="txt_footer"><h1>Nosotros</h1></label>
+                <div class="infospawn">
+                    <p>Somos una empresa líder en el mercado del hardware en nuestro país</p>
+                    <p>Seguridad y transparencia en su compra</p>
+                    <p>Más de 100 empresas argentinas confían en nosotros</p>
+                </div>
+            </div>
+        </footer>
+        <script src="../static/js/loginYregister.js"></script>
+        <script src="../static/js/menues.js"></script>
+    </body>
+</html>

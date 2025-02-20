@@ -1,0 +1,178 @@
+.carrusel_full {
+    position: relative;
+    margin-top: 10px;
+    overflow: hidden;
+    height: 300px;
+    background-color: rgba(170, 185, 88, 0.199);
+    border: 3px solid rgba(170, 185, 88, 0.364);
+    border-radius: 10%;
+}
+
+.carrusel_container {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.carrusel_prod {
+    display: flex;
+    flex-direction: row;
+    min-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: center;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    height: 300px;
+}
+
+.carrusel_prod a{
+    height: 100%;
+    width: auto;
+}
+
+.carrusel_prod img{
+    height: 100%;
+    width: auto;
+}
+
+.carrusel_prod img:hover{
+    transform: scale(1.2);
+    transition-duration: 0.3s;
+}
+
+.carrusel_prod h2 {
+    width: 20%;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.carrusel_prod .desc {
+    width: 20%;
+    font-size: 30px;
+    color: rgb(0, 193, 0);
+}
+
+.carrusel_prod .precio {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.carrusel_prod .precio_orig {
+    width: 100%;
+    text-decoration: line-through;
+    color: gray;
+    margin-bottom: 20px;
+}
+
+.carrusel_prod .precio_desc {
+    width: 100%;
+    color: rgb(0, 193, 0);
+}
+
+.boton_prev, .boton_sig {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    border: none;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 100;
+    border-radius: 50%;
+}
+
+.boton_prev {
+    left: 10px;
+}
+
+.boton_sig {
+    right: 10px;
+}
+
+.boton_prev:hover, .boton_sig:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+
+/* 1024px */
+@media (max-width: 1024px) {
+    .carrusel_full {
+        height: 300px;
+    }
+
+    .carrusel_prod {
+        height: 300px;
+        flex-direction: row;
+    }
+
+    .carrusel_prod h2 {
+        font-size: 24px;
+    }
+
+    .carrusel_prod .desc {
+        font-size: 26px;
+    }
+
+    .carrusel_prod .precio {
+        font-size: 26px;
+    }
+}
+
+/* 768px */
+@media (max-width: 768px) {
+    .carrusel_full {
+        height: 250px;
+    }
+
+    .carrusel_prod {
+        height: 250px;
+        flex-direction: row;
+    }
+
+    .carrusel_prod h2, .carrusel_prod .desc, .carrusel_prod .precio {
+        font-size: 20px;
+        width: 100%;
+    }
+
+    .carrusel_prod a,
+    .carrusel_prod img {
+        width: auto;
+        max-height: 180px;
+    }
+}
+
+/* 480px */
+@media (max-width: 480px) {
+    .carrusel_full {
+        height: 200px;
+    }
+
+    .carrusel_prod {
+        height: 200px;
+        flex-direction: row;
+    }
+
+    .carrusel_prod h2, .carrusel_prod .desc, .carrusel_prod .precio {
+        font-size: 16px;
+        width: 100%;
+    }
+
+    .carrusel_prod a,
+    .carrusel_prod img {
+        width: auto;
+        max-height: 120px;
+        max-width: 120px;
+    }
+
+    .boton_prev, .boton_sig {
+        font-size: 18px;
+        padding: 8px;
+    }
+}

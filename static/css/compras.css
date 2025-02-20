@@ -1,0 +1,171 @@
+section {
+    max-width: 100vw;
+    margin: 40px;
+    margin-left: 15vw;
+    margin-right: 15vw;
+    width: auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+section h1 {
+    text-align: center;
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+section form {
+    text-align: center;
+}
+
+section select {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 16px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+section table th, section table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+section table th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+}
+
+section table td {
+    color: #444;
+}
+
+button, section a {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+section button {
+    background-color: #e74c3c;
+    color: white;
+}
+
+section button:hover {
+    background-color: #c0392b;
+}
+
+section a {
+    background-color: #3498db;
+    color: white;
+}
+
+section a:hover {
+    background-color: #2980b9;
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #ccc;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: none;
+    border-radius: 8px;
+    max-width: 400px;
+    text-align: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    text-align: center;
+}
+
+.popup-content button {
+    margin: 10px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.popup-content button:first-child {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.popup-content button:first-child:hover {
+    background-color: #c0392b;
+}
+
+.popup-content button:last-child {
+    background-color: #7f8c8d;
+    color: white;
+}
+
+.popup-content button:last-child:hover {
+    background-color: #636e72;
+}
+
+section div {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Responsivos */
+@media (max-width: 768px) {
+    section {
+        margin: 30px;
+        padding: 15px;
+    }
+
+    section h1 {
+        font-size: 24px;
+    }
+
+    section table {
+        font-size: 14px;
+    }
+
+    section table th, section table td {
+        padding: 8px;
+    }
+    .tabla_compras{
+        overflow-x: auto;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    section {
+        margin: 15px;
+        padding: 10px;
+    }
+
+    section h1 {
+        font-size: 22px;
+    }
+}
